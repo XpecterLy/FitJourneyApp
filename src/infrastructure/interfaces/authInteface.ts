@@ -1,0 +1,1 @@
+export type AuthStatusInterface = 'authenticated' | 'unauthenticated' | 'checking' 
