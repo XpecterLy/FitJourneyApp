@@ -8,7 +8,7 @@ export const AuthProvider = ({children}: PropsWithChildren) => {
     
 const navigate = useNavigation<StackNavigationProp<RootStackParams>>();
 
-const { checkStatus, status } = useAuthStore();
+const { checkStatus, status, token } = useAuthStore();
 
     useEffect(() => {
         checkStatus();
@@ -19,14 +19,14 @@ const { checkStatus, status } = useAuthStore();
             if(status === 'authenticated'){
                 navigate.reset({
                     index: 0,
-                    routes: [{name: "HomeScreen"}]
+                    routes: [{name: "TabNavigator"}]
+                })
+            }else {
+                navigate.reset({
+                    index: 0,
+                    routes: [{name: "LoginScreen"}]
                 })
             }
-        }else {
-            navigate.reset({
-                index: 0,
-                routes: [{name: "LoginScreen"}]
-            })
         }
     }, [status]);
 

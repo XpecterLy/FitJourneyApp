@@ -2,17 +2,20 @@ import { Layout, Text, Input, Button} from "@ui-kitten/components";
 import { Alert, Image, TouchableOpacity } from 'react-native'
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState } from "react";
-import { IconUI } from "../../components/UI/Icon";
+import { MyIcon } from "../../components/UI/MyIcon";
 import { useAuthStore } from "../../hooks/useLogin";
 import { ScrollView } from "react-native-gesture-handler";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { RootStackParams } from "../../navigation/StackNavigation";
 
 
 export const LoginScreen = () => {
     const { top } = useSafeAreaInsets();
     const { login } = useAuthStore();
+    const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('user_root');
+    const [password, setPassword] = useState('@Root123');
     const [isPosting, setPosting] = useState(false);
     const [security, setSecurity] = useState(true);
 
@@ -20,9 +23,7 @@ export const LoginScreen = () => {
         setPosting(true);
         const wasSuccessFull = await login(username, password);
         setPosting(false);
-
         if(wasSuccessFull) return;
-
         Alert.alert('Error', 'Correo o contraseña incorrectos');
     }
 
@@ -62,7 +63,7 @@ export const LoginScreen = () => {
                                 <TouchableOpacity 
                                     onPress={ () => setSecurity(!security) }
                                 >
-                                    <IconUI name={security ? 'eye-off' : 'eye'} size={{ width: 25, height: 25 }}/>
+                                    <MyIcon name={security ? 'eye-off' : 'eye'} size={{ width: 25, height: 25 }}/>
                                 </TouchableOpacity >}
                             secureTextEntry={security}
                         />
@@ -70,11 +71,18 @@ export const LoginScreen = () => {
                         <Layout style={{height: 30}}/>
 
                         <Button
-                            appearance='ghost'
                             onPress={onLogIn}
                             disabled={isPosting}
                         >
                             <Text>Iniciar</Text>
+                        </Button>
+
+                        <Button
+                            appearance='ghost'
+                            onPress={ () => navigation.navigate('UserRegister') }
+                            disabled={isPosting}
+                        >
+                            <Text>Registrase</Text>
                         </Button>
                     </Layout>
 
@@ -87,8 +95,8 @@ export const LoginScreen = () => {
                     <Layout style={{height: 30}}/>
 
                     <Layout style={{ flexDirection: 'row' }}>
-                        <IconUI name="facebook-outline"/>
-                        <IconUI name="google-outline"/>
+                        <MyIcon name="facebook-outline"/>
+                        <MyIcon name="google-outline"/>
                     </Layout>
                 </Layout>
 

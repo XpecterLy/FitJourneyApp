@@ -22,31 +22,31 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     login: async (username: string, password: string) => {
         const res = await msAuth.authUser(username, password);
 
-        console.log(res);
-        
-
         if(!res) {
             set({ status: 'unauthenticated', token: undefined, user: undefined });
             return false;
         }
 
         await storageAdapter.setStorage('token', res.token);
-        set({ status: 'authenticated', token: res.token, user: undefined });
+        set({ status: 'authenticated', token: res.token, user: res.user });
         return true;
     },
 
     checkStatus: async () => {
         const res = await msAuth.checkTokenAuth();
-
         if(!res) {
             set({ status: 'unauthenticated', token: undefined, user: undefined });
+            return;
         }
-
-        set({ status: 'authenticated' });
+        
+        await storageAdapter.setStorage('token', res.token);
+        set({ status: 'authenticated', token: res.token, user: res.user });
+        return;
     },
 
     logout: async () => {
         await storageAdapter.removeStorage('token');
         set({status: "unauthenticated", token:undefined, user: undefined});
+        return;
     }
 }))
