@@ -1,11 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeScreen } from '../screens/home/HomeScreen';
 import { MyIcon } from '../components/UI/MyIcon';
-import { RoutinesTraking } from '../screens/routineTraking/RoutinesTraking';
+import { RoutinesTrakingScreen } from '../screens/routineTraking/RoutinesTraking';
+import { DashBoardScreen } from '../screens/dashBoard/DashBoard';
 
 export type RootStackParams = {
   HomeScreen: undefined;
-  RoutinesTraking: undefined;
+  RoutinesTrakingScreen: undefined;
+  DashBoardScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator<RootStackParams>();
@@ -19,7 +21,8 @@ export const TabNavigator = () => {
       initialRouteName='HomeScreen'
     >
       <Tab.Screen name="HomeScreen" component={HomeScreen} options={{ tabBarIcon: () => ( <MyIcon name={'home-outline'} color='#a9a3b3' /> ), title: '' }}/>
-      <Tab.Screen name="RoutinesTraking" component={RoutinesTraking} options={{ tabBarIcon: () => ( <MyIcon name={'checkmark-circle-outline'} color='#a9a3b3' /> ), title: '' }}/>
+      <Tab.Screen name="RoutinesTrakingScreen" component={RoutinesTrakingScreen} options={{ tabBarIcon: () => ( <MyIcon name={'checkmark-circle-outline'} color='#a9a3b3' /> ), title: '' }}/>
+      <Tab.Screen name="DashBoardScreen" component={DashBoardScreen} options={{ tabBarIcon: () => ( <MyIcon name={'activity-outline'} color='#a9a3b3' /> ), title: '' }}/>
     </Tab.Navigator>
   );
 }

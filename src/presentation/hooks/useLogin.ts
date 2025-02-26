@@ -46,7 +46,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
 
     logout: async () => {
         await storageAdapter.removeStorage('token');
-        set({status: "unauthenticated", token:undefined, user: undefined});
+        set({status: "unauthenticated"});
         return;
     }
 }))

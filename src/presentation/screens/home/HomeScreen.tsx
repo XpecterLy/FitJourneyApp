@@ -28,10 +28,10 @@ export const HomeScreen = () => {
         queryFn: () => msRoutine.getAllRoutines(),
     });
 
-    const { data: routineTrackings } = useQuery({
-        queryKey: ['routinesTraking', `${user?.id}`],
-        staleTime: 1000 * 60 * 60, // 1 hour
+    const { data: routineTrackings = [] } = useQuery({
+        queryKey: ['routinesTraking', `${user!.id}`],
         queryFn: () => msRoutineTraking.getAllRoutinesTraking(undefined, undefined, undefined, 'active'),
+        staleTime: 1000 * 60 * 60, // 1 hour
     });
 
     useEffect( () => {
@@ -57,7 +57,7 @@ export const HomeScreen = () => {
                         {/* <MyDivider /> */}
 
                         {/* Continue routine */}
-                        { routineTrackings &&
+                        { routineTrackings.length > 0 &&
                             <>
                             <Layout style={{alignItems: 'center', marginVertical: 5}}>
                                 <SubTitle text="Rutina Iniciada" />

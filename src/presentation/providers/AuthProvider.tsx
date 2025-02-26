@@ -5,26 +5,25 @@ import { useAuthStore } from "../hooks/useLogin";
 import React, { PropsWithChildren, useEffect } from "react";
 
 export const AuthProvider = ({children}: PropsWithChildren) => {
-    
-const navigate = useNavigation<StackNavigationProp<RootStackParams>>();
 
-const { checkStatus, status, token } = useAuthStore();
+    const navigation = useNavigation<StackNavigationProp<RootStackParams>>();
+    const {checkStatus, status} = useAuthStore();
 
     useEffect(() => {
         checkStatus();
     }, []);
 
     useEffect(() => {
-        if(status != 'checking' ){
-            if(status === 'authenticated'){
-                navigate.reset({
+        if(status != 'checking'){
+            if(status == 'authenticated'){
+                navigation.reset({
                     index: 0,
-                    routes: [{name: "TabNavigator"}]
+                    routes: [{name: 'TabNavigator'}]
                 })
             }else {
-                navigate.reset({
+                navigation.reset({
                     index: 0,
-                    routes: [{name: "LoginScreen"}]
+                    routes: [{name: 'LoginScreen'}]
                 })
             }
         }
