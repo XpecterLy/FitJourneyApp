@@ -1,6 +1,5 @@
 
 import { ScrollView } from "react-native-gesture-handler"
-import { useQuery } from "@tanstack/react-query"
 import React, { useEffect, useState } from "react"
 import { Layout, Text } from "@ui-kitten/components"
 
@@ -9,31 +8,22 @@ import { MyDivider } from "../../components/UI/MyDivider"
 import { useAuthStore } from "../../hooks/useLogin"
 import { msRoutine } from "../../../api/msRoutine"
 import { SeriesContentCards } from "../../components/series/seriesContentCards"
-import { msRoutineTraking } from "../../../api/msRoutineTraking"
 import { RoutineType } from "../../../domain/entities/routines.type"
 import { MyCard } from "../../components/UI/MyCards"
 import { MyButton } from "../../components/UI/MyButton"
 import { SubTitle } from "../../components/UI/SubTitle"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { RootStackParams } from "../../navigation/StackNavigation"
+import { useRoutine } from "../../hooks/useRoutine"
+import { useRoutineTrackings } from "../../hooks/useRoutineTrackings"
 
 export const HomeScreen = () => {
     const navigation = useNavigation<NavigationProp<RootStackParams>>();
-    const { user, logout } = useAuthStore();
+    const { logout } = useAuthStore();
+    const { routineTrackings } = useRoutineTrackings();
     const [ routineTrakingData, setRoutineTrakingData ] = useState<RoutineType>();
-
-    const { data: routines } = useQuery({
-        queryKey: ['routines'],
-        staleTime: 1000 * 60 * 60, // 1 hour
-        queryFn: () => msRoutine.getAllRoutines(),
-    });
-
-    const { data: routineTrackings = [] } = useQuery({
-        queryKey: ['routinesTraking', `${user!.id}`],
-        queryFn: () => msRoutineTraking.getAllRoutinesTraking(undefined, undefined, undefined, 'active'),
-        staleTime: 1000 * 60 * 60, // 1 hour
-    });
-
+    const { routines } = useRoutine();
+   
     useEffect( () => {
         if(routineTrackings){
             if(routineTrackings.length > 0){

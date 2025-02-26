@@ -9,7 +9,7 @@ import { ListExerciseRoutineTraking } from "../../components/routineTraking/List
 
 interface Props extends StackScreenProps<RootStackParams, 'RoutineTraking'>{};
 
-export const RoutineTraking = ({navigation, route}: Props) => {
+export const RoutineTraking = ({route}: Props) => {
 
     const routineTrakingId = route.params.id;
 
