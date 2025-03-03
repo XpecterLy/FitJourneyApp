@@ -15,15 +15,18 @@
   - UI Kitten
   - React Navigation
   - Axios
+  - Formik
+  - Yup
 
 ### Prerequisites  
   - Node.js v22+ 
 
 ## Install
   - npm i
+  - npx expo install --fix
 
 ## Init
-  - npm start
+  - npx expo start -c
 
 ## contact
   - lopescaleb@gmail.com or mr.xpecterly@gmail.com
